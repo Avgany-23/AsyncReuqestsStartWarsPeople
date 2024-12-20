@@ -11,10 +11,9 @@ async def get_people_request(id_user: int, semaphore: asyncio.Semaphore) -> bool
     async with semaphore, aiohttp.ClientSession(connector=conn) as client:
         url = 'https://swapi.py4e.com/api/people/%s/' % id_user
         async with client.get(url) as response:
-            data = await response.json()
-            if data == {'detail': 'Not found'}:
+            if response.status != 200:
                 return False
-            parse_data = ParsePeopleData(data)
+            parse_data = ParsePeopleData(await response.json())
             result = await parse_data.get_parse_data()
             result.update(id_character=id_user)
             await save_data_to_db(result)
