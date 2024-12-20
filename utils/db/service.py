@@ -1,4 +1,5 @@
-from utils.db.connect import connect_psql, create_async_engine, engine, Base
+from utils.db.connect import connect_psql, create_async_engine, engine
+from utils.db.basic import Base
 from sqlalchemy.ext.asyncio import AsyncSession
 from utils.db.models import StartWarsPeople
 
