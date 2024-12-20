@@ -11,7 +11,7 @@ async def initial_models(engine_: create_async_engine = engine) -> None:
 
 
 @connect_psql
-async def save_data_to_db(data: list[dict], session: AsyncSession) -> None:
-    records = [StartWarsPeople(**d) for d in data]
-    session.add_all(records)
+async def save_data_to_db(data: dict, session: AsyncSession) -> None:
+    records = StartWarsPeople(**data)
+    session.add(records)
     await session.commit()
